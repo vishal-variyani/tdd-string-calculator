@@ -40,4 +40,8 @@ describe("add function", () => {
   test("should handle different delimiter of any length", () => {
     expect(add("//[;;]\n1;;2")).toBe(3);
   });
+
+  test("should allow multiple different delimiter", () => {
+    expect(add("//[;][%]\n1;2%3")).toBe(6);
+  });
 });
