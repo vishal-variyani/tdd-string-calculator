@@ -5,8 +5,7 @@ export function add(numbers: string): number {
   const negativeNumbers: Array<number> = [];
 
   if (numbers.startsWith("//")) {
-    const match = numbers.match(/^\/\/(.+)\n/);
-    console.log(match);
+    const match = numbers.match(/^\/\/\[(.+)\]\n/);
     if (match) {
       delimiter = new RegExp(match[1], "g");
       numbers = numbers.slice(match[0].length);

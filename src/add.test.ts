@@ -30,10 +30,14 @@ describe("add function", () => {
   });
 
   test("should handle a different delimiter", () => {
-    expect(add("//;\n1;2")).toBe(3);
+    expect(add("//[;]\n1;2")).toBe(3);
   });
 
   test("should ignore number greater than 1000", () => {
     expect(add("1001, 2")).toBe(2);
+  });
+
+  test("should handle different delimiter of any length", () => {
+    expect(add("//[;;]\n1;;2")).toBe(3);
   });
 });
