@@ -37,11 +37,11 @@ describe("add function", () => {
     expect(add("1001, 2")).toBe(2);
   });
 
-  test("should handle different delimiter of any length", () => {
+  test("should handle different delimiter of length more than one char", () => {
     expect(add("//[;;]\n1;;2")).toBe(3);
   });
 
-  test("should allow multiple different delimiter", () => {
+  test("should handle multiple different delimiter of length more than one char", () => {
     expect(add("//[;][%]\n1;2%3")).toBe(6);
   });
 });
