@@ -28,4 +28,8 @@ describe("add function", () => {
   test("should throw an error for negative numbers", () => {
     expect(() => add("1,-2,-4")).toThrow("negative numbers not allowed -2, -4");
   });
+
+  test("should handle a different delimiter", () => {
+    expect(add("//;\n1;2")).toBe(3);
+  });
 });

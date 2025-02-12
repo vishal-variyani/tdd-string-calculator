@@ -1,8 +1,17 @@
 export function add(numbers: string): number {
   if (!numbers || !numbers.length) return 0;
 
-  const delimiter = /,|\n/;
+  let delimiter = /,|\n/;
   const negativeNumbers: Array<number> = [];
+
+  if (numbers.startsWith("//")) {
+    const match = numbers.match(/^\/\/(.+)\n/);
+    console.log(match);
+    if (match) {
+      delimiter = new RegExp(match[1], "g");
+      numbers = numbers.slice(match[0].length);
+    }
+  }
 
   const numArray = numbers.split(delimiter).map((num) => {
     const parsedNum = parseInt(num, 10);
@@ -25,3 +34,5 @@ export function add(numbers: string): number {
 
   return numArray.reduce((sum, ele) => sum + ele);
 }
+
+console.log(add("//;\n1;2"));
