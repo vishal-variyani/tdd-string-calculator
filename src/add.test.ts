@@ -20,4 +20,8 @@ describe("add function", () => {
   test("should handle large numbers", () => {
     expect(add("100,200,300")).toBe(600);
   });
+
+  test("should handle , as well as \n separated numbers", () => {
+    expect(add("1,2,3 \n 4")).toBe(10);
+  });
 });
