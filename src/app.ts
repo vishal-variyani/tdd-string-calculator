@@ -23,6 +23,11 @@ export function add(numbers: string): number {
       negativeNumbers.push(parsedNum);
     }
 
+    if (parsedNum > 1000) {
+      // Ignores number if greater than 1000
+      return 0;
+    }
+
     return parsedNum;
   });
 
@@ -34,5 +39,3 @@ export function add(numbers: string): number {
 
   return numArray.reduce((sum, ele) => sum + ele);
 }
-
-console.log(add("//;\n1;2"));
