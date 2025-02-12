@@ -14,7 +14,7 @@ describe("add function", () => {
   });
 
   test("should handle invalid numbers", () => {
-    expect(add("1,a,3")).toBeNaN();
+    expect(() => add("1,a,3")).toThrow("Invalid input a");
   });
 
   test("should handle large numbers", () => {
@@ -23,5 +23,9 @@ describe("add function", () => {
 
   test("should handle , as well as \n separated numbers", () => {
     expect(add("1,2,3 \n 4")).toBe(10);
+  });
+
+  test("should throw an error for negative numbers", () => {
+    expect(() => add("1,-2,-4")).toThrow("negative numbers not allowed -2, -4");
   });
 });
