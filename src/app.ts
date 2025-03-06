@@ -1,24 +1,14 @@
+let NUMBERS: string;
+
 export function add(numbers: string): number {
   if (!numbers || !numbers.length) return 0;
 
-  let delimiter = /,|\n/;
+  NUMBERS = numbers;
 
-  if (checkIfThereAreMultipleDelimeters(numbers)) {
-    const match = numbers.match(/^\/\/\[(.+)\]\n/);
-    if (match) {
-      [...match[0].matchAll(/\[(.)\]/g)].map((d) => {
-        return;
-      });
-      const delimitersMatch = [...match[0].matchAll(/\[(.+?)\]/g)].map(
-        (m) => m[1]
-      );
-      delimiter = new RegExp(`[${delimitersMatch.join("")}]+`);
-      numbers = numbers.slice(match[0].length);
-    }
-  }
+  const delimiter = getDelimeters(NUMBERS);
 
   // Parse Numbers
-  const numArray = numbers.split(delimiter).map((num) => {
+  const numArray = NUMBERS.split(delimiter).map((num) => {
     const parsedNum = parseInt(num, 10);
     if (isNaN(parsedNum)) {
       throw new Error(`Invalid input ${num}`);
@@ -43,4 +33,23 @@ export function add(numbers: string): number {
 
 const checkIfThereAreMultipleDelimeters = (numbers: string) => {
   return numbers.startsWith("//");
+};
+
+const getDelimeters = (numbers: string) => {
+  if (checkIfThereAreMultipleDelimeters(numbers)) {
+    const match = numbers.match(/^\/\/\[(.+)\]\n/);
+    if (match) {
+      [...match[0].matchAll(/\[(.)\]/g)].map((d) => {
+        return;
+      });
+      const delimitersMatch = [...match[0].matchAll(/\[(.+?)\]/g)].map(
+        (m) => m[1]
+      );
+      const delimiter = new RegExp(`[${delimitersMatch.join("")}]+`);
+      NUMBERS = numbers.slice(match[0].length);
+      return delimiter;
+    }
+  }
+
+  return /,|\n/;
 };
