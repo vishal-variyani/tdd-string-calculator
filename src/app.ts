@@ -2,13 +2,8 @@ export function add(numbers: string): number {
   if (!numbers || !numbers.length) return 0;
 
   let delimiter = /,|\n/;
-  const negativeNumbers: Array<number> = [];
 
-  const checkIfThereAreMultipleDelimeters = () => {
-    return numbers.startsWith("//");
-  };
-
-  if (checkIfThereAreMultipleDelimeters()) {
+  if (checkIfThereAreMultipleDelimeters(numbers)) {
     const match = numbers.match(/^\/\/\[(.+)\]\n/);
     if (match) {
       [...match[0].matchAll(/\[(.)\]/g)].map((d) => {
@@ -22,23 +17,18 @@ export function add(numbers: string): number {
     }
   }
 
+  // Parse Numbers
   const numArray = numbers.split(delimiter).map((num) => {
     const parsedNum = parseInt(num, 10);
     if (isNaN(parsedNum)) {
       throw new Error(`Invalid input ${num}`);
     }
 
-    if (parsedNum < 0) {
-      negativeNumbers.push(parsedNum);
-    }
-
-    if (parsedNum > 1000) {
-      // Ignores number if greater than 1000
-      return 0;
-    }
-
     return parsedNum;
   });
+
+  // Filter Negative Numers
+  const negativeNumbers = numArray.filter((num) => num < 0);
 
   if (negativeNumbers.length) {
     throw new Error(
@@ -46,5 +36,11 @@ export function add(numbers: string): number {
     );
   }
 
-  return numArray.reduce((sum, ele) => sum + ele);
+  const removeNumberGreaterThanThousand = numArray.filter((num) => num < 1000);
+
+  return removeNumberGreaterThanThousand.reduce((sum, ele) => sum + ele);
 }
+
+const checkIfThereAreMultipleDelimeters = (numbers: string) => {
+  return numbers.startsWith("//");
+};
