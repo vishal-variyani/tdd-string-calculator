@@ -4,7 +4,11 @@ export function add(numbers: string): number {
   let delimiter = /,|\n/;
   const negativeNumbers: Array<number> = [];
 
-  if (numbers.startsWith("//")) {
+  const checkIfThereAreMultipleDelimeters = () => {
+    return numbers.startsWith("//");
+  };
+
+  if (checkIfThereAreMultipleDelimeters()) {
     const match = numbers.match(/^\/\/\[(.+)\]\n/);
     if (match) {
       [...match[0].matchAll(/\[(.)\]/g)].map((d) => {
