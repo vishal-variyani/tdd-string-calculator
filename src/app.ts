@@ -35,14 +35,12 @@ const getDelimeters = (
   numbers: string
 ): { processedNumbers: string; delimiter: RegExp } => {
   if (checkIfThereAreMultipleDelimeters(numbers)) {
-    const match = numbers.match(/^\/\/\[(.+)\]\n/);
+    const match = numbers.match(/^\/\/(.+)\n/);
     if (match) {
-      [...match[0].matchAll(/\[(.)\]/g)].map((d) => {
+      [...match[1].matchAll(/(.)/g)].map((d) => {
         return;
       });
-      const delimitersMatch = [...match[0].matchAll(/\[(.+?)\]/g)].map(
-        (m) => m[1]
-      );
+      const delimitersMatch = [...match[1].matchAll(/(.+?)/g)].map((m) => m[1]);
       const delimiter = new RegExp(`[${delimitersMatch.join("")}]+`);
       numbers = numbers.slice(match[0].length);
       return { processedNumbers: numbers, delimiter };

@@ -30,7 +30,7 @@ describe("add function", () => {
   });
 
   test("should handle a different delimiter", () => {
-    expect(add("//[;]\n1;2")).toBe(3);
+    expect(add("//;\n1;2")).toBe(3);
   });
 
   test("should ignore number greater than 1000", () => {
@@ -38,10 +38,10 @@ describe("add function", () => {
   });
 
   test("should handle different delimiter of length more than one char", () => {
-    expect(add("//[;;]\n1;;2")).toBe(3);
+    expect(add("//;;\n1;;2")).toBe(3);
   });
 
   test("should handle multiple different delimiter of length more than one char", () => {
-    expect(add("//[;][%]\n1;2%3")).toBe(6);
+    expect(add("//;%\n1;2%3")).toBe(6);
   });
 });
