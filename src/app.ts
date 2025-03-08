@@ -1,14 +1,10 @@
-let NUMBERS: string;
-
 export function add(numbers: string): number {
   if (!numbers || !numbers.length) return 0;
 
-  NUMBERS = numbers;
-
-  const delimiter = getDelimeters(NUMBERS);
+  const { processedNumbers, delimiter } = getDelimeters(numbers);
 
   // Parse Numbers
-  const numArray = NUMBERS.split(delimiter).map((num) => {
+  const numArray = processedNumbers.split(delimiter).map((num) => {
     const parsedNum = parseInt(num, 10);
     if (isNaN(parsedNum)) {
       throw new Error(`Invalid input ${num}`);
@@ -31,11 +27,13 @@ export function add(numbers: string): number {
   return removeNumberGreaterThanThousand.reduce((sum, ele) => sum + ele);
 }
 
-const checkIfThereAreMultipleDelimeters = (numbers: string) => {
+const checkIfThereAreMultipleDelimeters = (numbers: string): boolean => {
   return numbers.startsWith("//");
 };
 
-const getDelimeters = (numbers: string) => {
+const getDelimeters = (
+  numbers: string
+): { processedNumbers: string; delimiter: RegExp } => {
   if (checkIfThereAreMultipleDelimeters(numbers)) {
     const match = numbers.match(/^\/\/\[(.+)\]\n/);
     if (match) {
@@ -46,10 +44,10 @@ const getDelimeters = (numbers: string) => {
         (m) => m[1]
       );
       const delimiter = new RegExp(`[${delimitersMatch.join("")}]+`);
-      NUMBERS = numbers.slice(match[0].length);
-      return delimiter;
+      numbers = numbers.slice(match[0].length);
+      return { processedNumbers: numbers, delimiter };
     }
   }
 
-  return /,|\n/;
+  return { processedNumbers: numbers, delimiter: /,|\n/ };
 };
