@@ -6,6 +6,7 @@ export function add(numbers: string): number {
   // Parse Numbers
   const numArray = processedNumbers.split(delimiter).map((num) => {
     const parsedNum = parseInt(num, 10);
+    // Check if the input is valid or not
     if (isNaN(parsedNum)) {
       throw new Error(`Invalid input ${num}`);
     }
@@ -37,11 +38,7 @@ const getDelimeters = (
   if (checkIfThereAreMultipleDelimeters(numbers)) {
     const match = numbers.match(/^\/\/(.+)\n/);
     if (match) {
-      [...match[1].matchAll(/(.)/g)].map((d) => {
-        return;
-      });
-      const delimitersMatch = [...match[1].matchAll(/(.+?)/g)].map((m) => m[1]);
-      const delimiter = new RegExp(`[${delimitersMatch.join("")}]+`);
+      const delimiter = new RegExp(`[${match[1]}]+`);
       numbers = numbers.slice(match[0].length);
       return { processedNumbers: numbers, delimiter };
     }
